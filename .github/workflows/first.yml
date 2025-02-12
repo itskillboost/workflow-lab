@@ -5,22 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-          architecture: 'x64'
-          cache: 'pip' # pip 캐시
-      # 종속성 설치 및 requirements.txt
+          python-version: '3.x'
       - name: Install dependencies
         run: |
-            python -m pip install --upgrade pip setuptools wheel
-            pip install -r requirements.txt
-            pip --version
-      # Python 버전 출력
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
-
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Test with pytest
+        run: |
+          pip install pytest pytest-cov
+          pytest nbn.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
       # 구구단을 출력하는 nbn.py 실행
       - name: Run nbn.py (Multiplication Table)
         run: python nbn.py
