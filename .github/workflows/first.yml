@@ -16,7 +16,7 @@ jobs:
       - name: Test with pytest
         run: |
           pip install pytest pytest-cov
-          pytest test.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+          pytest nbn.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
       # 구구단을 출력하는 nbn.py 실행
       - name: Run nbn.py (Multiplication Table)
         run: python nbn.py
