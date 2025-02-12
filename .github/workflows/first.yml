@@ -16,7 +16,7 @@ jobs:
         run: |
             python -m pip install --upgrade pip setuptools wheel
             pip install -r requirement.txt
-            pip --verion
+            pip --version
       # Python 버전 출력
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
