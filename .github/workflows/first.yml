@@ -20,7 +20,8 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+        #   python-version: ${{ matrix.python-version }}
+          python-version: '3.12'
           architecture: 'x64'
           cache: 'pip' # pip 캐시
       # 종속성 설치 및 requirement.txt
