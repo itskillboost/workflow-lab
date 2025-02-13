@@ -24,8 +24,19 @@ jobs:
         with:
           java-version: 11
 
+      - name: Ensure Gradle Wrapper Exists
+        run: |
+          if [ ! -f "./gradlew" ]; then
+            echo "⚠️ gradlew 파일이 없습니다. Gradle Wrapper를 다운로드합니다."
+            wget https://services.gradle.org/distributions/gradle-7.6.1-bin.zip
+            unzip gradle-7.6.1-bin.zip
+            mkdir -p gradle/wrapper
+            wget https://services.gradle.org/distributions/gradle-7.6.1-bin.zip -O gradle/wrapper/gradle-wrapper.jar
+            chmod +x gradlew
+          fi
+
       - name: Grant Execute Permission for Gradle Wrapper
-        run: chmod +x ./gradlew
+        run: chmod +x ./gradlew  # gradlew 실행 권한 부여
 
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
