@@ -19,17 +19,14 @@ jobs:
         with:
           submodules: true
 
-      - name: Check gradlew existence
-        run: ls -al
+      - name: Check Gradle Wrapper Files
+        run: ls -R gradle/wrapper || echo "Gradle wrapper folder is missing!"
 
-      - name: Download Gradle Wrapper if missing
+      - name: Reinstall Gradle Wrapper if Missing
         run: |
-          if [ ! -f gradlew ]; then
-            echo "gradlew not found, downloading..."
-            wget https://services.gradle.org/distributions/gradle-7.6.1-bin.zip
-            unzip gradle-7.6.1-bin.zip
-            mv gradle-7.6.1/bin/gradle gradlew
-            chmod +x gradlew
+          if [ ! -f gradle/wrapper/gradle-wrapper.jar ]; then
+            echo "gradle-wrapper.jar not found, reinstalling..."
+            ./gradlew wrapper
           fi
 
       - name: Grant execute permission for gradlew
@@ -40,6 +37,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+
+      - name: Download and Setup Gradle
+        run: |
+          mkdir -p ~/.gradle/wrapper/dists
+          wget -q https://services.gradle.org/distributions/gradle-7.6-bin.zip -O ~/.gradle/wrapper/dists/gradle-7.6-bin.zip
+          unzip -q ~/.gradle/wrapper/dists/gradle-7.6-bin.zip -d ~/.gradle/wrapper/dists/
 
       - name: Build with Gradle
         run: ./gradlew build
